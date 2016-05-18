@@ -34,9 +34,10 @@ public class MochilaGulosa {
 	 * @param capacidade
 	 * @return
 	 */
-	public List<Item> adicionaItens(int capacidade) {
+	public List<Item> executaAlgoritmoGuloso(int capacidade) {
 
-		ArrayList<Item> itensRoubados = new ArrayList<Item>();
+		//representa a mochila do assaltante
+		ArrayList<Item> itensRoubadosNossaMochila = new ArrayList<Item>();
 
 		for (Item item : itensDisponiveisParaRoubar) {
 
@@ -44,8 +45,8 @@ public class MochilaGulosa {
 			//eu pego o item inteiro
 			if (item != null && item.getQuantidade() <= capacidade) {
 				
-				//roubei o item inteiro
-				itensRoubados.add(item);
+				//roubei o item inteiro e coloquei na mochila
+				itensRoubadosNossaMochila.add(item);
 				
 				//agora, minha capacidade diminuiu
 				capacidade -= item.getQuantidade();
@@ -57,15 +58,15 @@ public class MochilaGulosa {
 				//crio um objeto que tenha a capacidade
 				Item itemParcial = new Item(item.getNome(), item.getValor(), capacidade);
 
-				//roubo o item parcialmente
-				itensRoubados.add(itemParcial);
+				//roubar o item parcialmente
+				itensRoubadosNossaMochila.add(itemParcial);
 				
-				//agora, minha capacidade diminuu
-				//ou senão esgotou!
+				//agora, minha capacidade diminuiu
+				//ou senão se esgotou!
 				capacidade -= item.getQuantidade();
 			}
 		}
 
-		return itensRoubados;
+		return itensRoubadosNossaMochila;
 	}
 }

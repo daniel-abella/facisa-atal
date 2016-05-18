@@ -18,7 +18,7 @@ public class MainGuloso {
 		
 		MochilaGulosa mochilaGulosa = new MochilaGulosa(itens);
 		
-		List<Item> itensRoubados = mochilaGulosa.adicionaItens(50);
+		List<Item> itensRoubados = mochilaGulosa.executaAlgoritmoGuloso(50);
 		
 		for (Item item : itensRoubados) {
 			System.out.println(item);

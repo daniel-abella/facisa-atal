@@ -11,43 +11,34 @@ import java.util.Arrays;
 public class SubsetSum {
 	
 	private int[] numbers;
-	private int sum = 5; //a soma tem que ser 5
+	private int sum = 5;
 	private int totalSum = 0;
 	private ArrayList<ArrayList<Integer>> results;
 
 	public SubsetSum(int[] numbers) {
 		this.numbers = numbers;
-		
-		//ordena
 		Arrays.sort(numbers);
-
-		//obtém a soma
 		for (int item : numbers) {
 			totalSum += item;
 		}
 	}
 
 	public ArrayList<ArrayList<Integer>> run() {
-		
 		results = new ArrayList<ArrayList<Integer>>();
 		sumOfSubsets(0, 0, totalSum, new ArrayList<Integer>());
 		return results;
 	}
 
 	private void sumOfSubsets(int index, int currentSum, int remainingSum, ArrayList<Integer> sublist) {
-
 		sublist.add(numbers[index]);
-		
 		if (numbers[index] + currentSum == sum) {
 			results.add(sublist);
 		
-		} else if (index + 1 < numbers.length  //se deve seguir
-				&& currentSum + numbers[index] + numbers[index + 1] <= sum) {
+		} else if (index + 1 < numbers.length && currentSum + numbers[index] + numbers[index + 1] <= sum) {
 			sumOfSubsets(index + 1, currentSum + numbers[index], remainingSum - numbers[index],new ArrayList<Integer>(sublist));
 		}
 		
-		if (index + 1 < numbers.length 
-				&& currentSum + numbers[index + 1] <= sum
+		if (index + 1 < numbers.length && currentSum + numbers[index + 1] <= sum
 				&& currentSum + remainingSum - numbers[index] >= sum) {
 			sublist.remove(sublist.size() - 1);
 			sumOfSubsets(index + 1, currentSum, remainingSum - numbers[index], new ArrayList<Integer>(sublist));

@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Knapsack {
 
-	private int n, W; // número e ítens e capacidade máxima
+	private int n, W; // number of items and maximum capacity
 	private int w[], v[]; // weights and values of items
 	private int V[][]; // table to store results of sub-problems
 

@@ -1,8 +1,5 @@
 package br.cesed.si.atal.gulosos.knapsack;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Implementação da Mochila por Estratégia Gulosa
  * 
@@ -11,15 +8,15 @@ import java.util.List;
  */
 public class MochilaGulosa {
 
-	private List<Item> itensDisponiveisParaRoubar;
+	private Item[] itens = null;
 
 	/**
-	 * Recebe todos os itensDisponiveisParaRoubar que podem ser roubados.
+	 * Recebe todos os itens que podem ser roubados.
 	 * 
-	 * @param itensDisponiveisParaRoubar;
+	 * @param itens itens que podem ser roubados
 	 */
-	public MochilaGulosa(List<Item> itensDisponiveisParaRoubar) {
-		this.itensDisponiveisParaRoubar = itensDisponiveisParaRoubar;
+	public MochilaGulosa(Item[] itens) {
+		this.itens = itens;
 	}
 
 	/**
@@ -27,46 +24,44 @@ public class MochilaGulosa {
 	 * 
 	 * Como funciona o problema da mochila fracionária?
 	 * 
-	 * Vai pegando os itensDisponiveisParaRoubar que tiver pela frente Senão
-	 * poder pegar o item inteiro, pega a fração dele.
+	 * Vai pegando os itens que tiver pela frente
+	 * Senão poder pegar o item inteiro, pega a fração dele.
 	 * 
 	 * 
 	 * @param capacidade
 	 * @return
 	 */
-	public List<Item> executaAlgoritmoGuloso(int capacidade) {
+	public Item[] adicionaItens(int capacidade) {
 
-		//representa a mochila do assaltante
-		ArrayList<Item> itensRoubadosNossaMochila = new ArrayList<Item>();
+		Item[] itensAdicionados = new Item[this.itens.length];
 
-		for (Item item : itensDisponiveisParaRoubar) {
-
-			//se eu tenho capacidade para pegar o item inteiro
-			//eu pego o item inteiro
-			if (item != null && item.getQuantidade() <= capacidade) {
-				
-				//roubei o item inteiro e coloquei na mochila
-				itensRoubadosNossaMochila.add(item);
-				
-				//agora, minha capacidade diminuiu
-				capacidade -= item.getQuantidade();
+		int itemIndice = 0;
+		
+		// pegar itens até que a mochila esteja cheia ou não haja mais itens para colocar
+		
+		while (capacidade > 0 && itemIndice < this.itens.length) {
 			
-			//se eu não tenho capacidade de pegá-lo inteiramente
-			//eu o pego parcialmente!
-				
+			// se cabe inteiro, pegue inteiro
+			if (this.itens[itemIndice].quantidade <= capacidade) {
+				//diminuiu a capacidade (por exemplo: se minha capacidade era de 50kg e peguei um item de 10kg, minha capacidade é reduzida para 40kg
+				capacidade -= this.itens[itemIndice].quantidade;
+				//pegue inteiro
+				itensAdicionados[itemIndice] = new Item(itens[itemIndice].nome,itens[itemIndice].valor,itens[itemIndice].quantidade);
+			
+			// se não cabe inteiro, pegue a fração que puder
 			} else {
-				//crio um objeto que tenha a capacidade
-				Item itemParcial = new Item(item.getNome(), item.getValor(), capacidade);
-
-				//roubar o item parcialmente
-				itensRoubadosNossaMochila.add(itemParcial);
-				
-				//agora, minha capacidade diminuiu
-				//ou senão se esgotou!
-				capacidade -= item.getQuantidade();
+				itensAdicionados[itemIndice] = new Item(itens[itemIndice].nome,itens[itemIndice].valor, capacidade);
+				capacidade = 0;
 			}
+			
+			itemIndice++;
 		}
 
-		return itensRoubadosNossaMochila;
+		// adiciona outros itens de quantidade 0
+		for (int i = itemIndice; i < this.itens.length; i++) {
+			itensAdicionados[i] = new Item(this.itens[i].nome,this.itens[i].valor, 0);
+		}
+
+		return itensAdicionados;
 	}
 }

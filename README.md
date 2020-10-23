@@ -9,7 +9,8 @@ Este repositório tem alguns dos códigos produzidos em sala de aula, assim como
 
 
 ## Algoritmos de Ordenação [![](https://img.shields.io/badge/Daniel-Abella.svg?colorB=ff0000)](https://daniel-abella.com)
-This code helps you to understand the different Sorting algorithms. The sorting algorithms depicted in this code are:
+
+O projeto "algoritmos-ordenacao" compreende diversos algoritmos de ordenação na linguagem, sendo eles:
 1) Bubble Sort
 2) Selection Sort
 3) Insertion Sort
